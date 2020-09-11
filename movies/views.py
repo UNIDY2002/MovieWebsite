@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views import generic
 
 from movies.models import Actor, Movie
@@ -22,3 +23,7 @@ class MovieView(generic.DetailView):
         self.object.plots = list(self.object.plot_set.all())
         self.object.reviews = list(self.object.review_set.all())
         return super().get_context_data(**kwargs)
+
+
+def search(request):
+    return render(request, 'search.html')

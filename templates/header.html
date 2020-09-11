@@ -1,0 +1,15 @@
+<form action="{% url 'search' %}">
+    <label>
+        分类
+        <select name="type">
+            <option value="movie">电影</option>
+            <option value="actor">演员</option>
+            <option value="review">影评</option>
+        </select>
+    </label>
+    <label>
+        请搜索：
+        <input type="text" name="q"/>
+    </label>
+    <input type="submit" value="搜索"/>
+</form>
