@@ -15,3 +15,9 @@ class ActorView(generic.DetailView):
 class MovieView(generic.DetailView):
     template_name = 'movie.html'
     model = Movie
+
+    def get_context_data(self, **kwargs):
+        self.object.actor_set = list(self.object.actors.all())
+        self.object.plots = list(self.object.plot_set.all())
+        self.object.reviews = list(self.object.review_set.all())
+        return super().get_context_data(**kwargs)

@@ -16,11 +16,17 @@
 <p>{{ object.location }}</p>
 <p>{{ object.company }}</p>
 <p>{{ object.alias }}</p>
-{% for collaborator in object.collaborators %}
-    <a href="{% url 'actor' collaborator.id %}">
-        <img src="{{ collaborator.photo }}" alt="{{ collaborator.name }}">
-        <p>{{ collaborator.name }}</p>
+{% for actor in object.actor_set %}
+    <a href="{% url 'actor' actor.id %}">
+        <img src="{{ actor.photo }}" alt="{{ actor.name }}">
+        <p>{{ actor.name }}</p>
     </a>
+{% endfor %}
+{% for plot in object.plots %}
+    <p>{{ plot.content|linebreaksbr }}</p>
+{% endfor %}
+{% for review in object.reviews %}
+    <p>{{ review.content|linebreaksbr }}</p>
 {% endfor %}
 </body>
 </html>

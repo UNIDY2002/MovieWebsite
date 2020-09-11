@@ -30,5 +30,13 @@ class Movie(models.Model):
     company = models.CharField(max_length=1024)
     alias = models.CharField(max_length=512)
     actors = models.ManyToManyField(Actor)
-    plots = models.CharField(max_length=32768)
-    reviews = models.CharField(max_length=32768)
+
+
+class Plot(models.Model):
+    content = models.CharField(max_length=16384)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+
+class Review(models.Model):
+    content = models.CharField(max_length=16384)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)

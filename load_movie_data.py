@@ -24,3 +24,7 @@ with open('data/movie_merged.json', encoding='utf-8') as f:
                 movie_model.actors.add(Actor.objects.get(pk=actor))
             except Exception as e:
                 print('%s Actor id is %s.' % (e, actor))
+        for plot in movie['plots']:
+            movie_model.plot_set.create(content=plot)
+        for review in movie['reviews']:
+            movie_model.review_set.create(content=review)
