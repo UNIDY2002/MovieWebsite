@@ -1,6 +1,6 @@
 from django.views import generic
 
-from movies.models import Actor
+from movies.models import Actor, Movie
 
 
 class ActorView(generic.DetailView):
@@ -10,3 +10,8 @@ class ActorView(generic.DetailView):
     def get_context_data(self, **kwargs):
         self.object.collaborators = [Actor.objects.get(pk=int(x)) for x in self.object.collaboration.split()]
         return super().get_context_data(**kwargs)
+
+
+class MovieView(generic.DetailView):
+    template_name = 'movie.html'
+    model = Movie

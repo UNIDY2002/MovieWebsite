@@ -15,6 +15,7 @@ class Actor(models.Model):
 
 
 class Movie(models.Model):
+    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=256)
     year = models.CharField(max_length=8)
     actor_1 = models.IntegerField()

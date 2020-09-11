@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ object.title }}</title>
+</head>
+<body>
+<img src="{{ object.img }}" alt="{{ object.title }}">
+<p>{{ object.title }}</p>
+<p>{{ object.year }}</p>
+<p>{{ object.genre }}</p>
+<p>{{ object.time }}分钟</p>
+<p>{{ object.rating }}</p>
+<p>{{ object.director }}</p>
+<p>{{ object.screen_writer }}</p>
+<p>{{ object.location }}</p>
+<p>{{ object.company }}</p>
+<p>{{ object.alias }}</p>
+{% for collaborator in object.collaborators %}
+    <a href="{% url 'actor' collaborator.id %}">
+        <img src="{{ collaborator.photo }}" alt="{{ collaborator.name }}">
+        <p>{{ collaborator.name }}</p>
+    </a>
+{% endfor %}
+</body>
+</html>
