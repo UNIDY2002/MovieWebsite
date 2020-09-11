@@ -13,6 +13,9 @@ class Actor(models.Model):
     biography = models.CharField(max_length=8192)
     collaboration = models.CharField(max_length=256)
 
+    def __repr__(self):
+        return self.name
+
 
 class Movie(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -31,12 +34,21 @@ class Movie(models.Model):
     alias = models.CharField(max_length=512)
     actors = models.ManyToManyField(Actor)
 
+    def __repr__(self):
+        return self.title
+
 
 class Plot(models.Model):
     content = models.CharField(max_length=16384)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
+    def __repr__(self):
+        return self.movie.title
+
 
 class Review(models.Model):
     content = models.CharField(max_length=16384)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    def __repr__(self):
+        return self.movie.title

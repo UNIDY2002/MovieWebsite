@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <title>搜索结果</title>
 </head>
+{% include 'header.html' %}
 <body>
-<p>{{ request.GET.type }}</p>
-<p>{{ request.GET.q }}</p>
+{% for result in results %}
+    <a href="{{ result.href }}">
+        <img src="{{ result.img }}" alt="{{ result.title }}"/>
+        <p>{{ result.title }}</p>
+    </a>
+    <p>{{ result.brief }}</p>
+{% endfor %}
 </body>
 </html>
