@@ -6,6 +6,7 @@
 </head>
 {% include 'header.html' %}
 <body>
+<p>找到{{ total }}条结果，用时：{{ time }}s</p>
 {% for result in results %}
     <a href="{{ result.href }}">
         <img src="{{ result.img }}" alt="{{ result.title }}"/>
@@ -13,5 +14,54 @@
     </a>
     <p>{{ result.brief }}</p>
 {% endfor %}
+{% if page_num > 1 %}
+    <ul>
+
+        {% if results.has_previous %}
+            <li>
+                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ results.previous_page_number }}">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if front %}
+            <li>
+                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}">1</a>
+            </li>
+        {% endif %}
+
+        {% for index in visible_pages %}
+            <li>
+                <a class="page-link{% if page == index %} selected{% endif %}"
+                   href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ index }}">{{ index }}</a>
+            </li>
+        {% endfor %}
+
+        {% if end %}
+            <li>
+                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ page_num }}">{{ page_num }}</a>
+            </li>
+        {% endif %}
+
+        {% if results.has_next %}
+            <li>
+                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ results.next_page_number }}">
+                    <span>&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <form>
+        <input type="hidden" name="type" value="{{ request.GET.type }}"/>
+        <input type="hidden" name="q" value="{{ request.GET.q }}"/>
+        <label>
+            跳转到：
+            <input type="text" name="page"/>
+        </label>
+        <input type="submit" value="跳转"/>
+    </form>
+{% endif %}
 </body>
 </html>

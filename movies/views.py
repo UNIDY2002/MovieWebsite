@@ -1,3 +1,6 @@
+from time import time
+
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
 from django.views import generic
@@ -27,6 +30,7 @@ class MovieView(generic.DetailView):
 
 
 def search(request):
+    start = time()
     params = {}
     category = request.GET['type'] \
         if 'type' in request.GET and request.GET['type'] in ['movie', 'actor', 'review'] else 'movie'
@@ -53,4 +57,20 @@ def search(request):
             'href': '/movie/%s/' % x.movie.id,
             'brief': x.content[:100] + ('' if len(x.content) <= 100 else '...'),
         } for x in r]
+    paginator = Paginator(params['results'], 10)
+    if 'page' in request.GET:
+        page = int(request.GET['page'])
+        if page > paginator.num_pages:
+            page = paginator.num_pages
+    else:
+        page = 1
+    params['results'] = paginator.page(page)
+    params['page_id'] = page
+    params['page_num'] = paginator.num_pages
+    params['visible_pages'] = [p for p in range(page - 2, page + 6) if p in paginator.page_range]
+    params['total'] = paginator.count
+    params['front'] = 1 not in params['visible_pages']
+    params['end'] = paginator.num_pages not in params['visible_pages']
+    end = time()
+    params['time'] = "%.6f" % (end - start)
     return render(request, 'search.html', params)

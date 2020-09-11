@@ -2,14 +2,14 @@
     <label>
         分类
         <select name="type">
-            <option value="movie">电影</option>
-            <option value="actor">演员</option>
-            <option value="review">影评</option>
+            <option value="movie"{% if request.GET.type == 'movie' %} selected{% endif %}>电影</option>
+            <option value="actor"{% if request.GET.type == 'actor' %} selected{% endif %}>演员</option>
+            <option value="review"{% if request.GET.type == 'review' %} selected{% endif %}>影评</option>
         </select>
     </label>
     <label>
         请搜索：
-        <input type="text" name="q"/>
+        <input type="text" name="q" value="{{ request.GET.q }}"/>
     </label>
     <input type="submit" value="搜索"/>
 </form>
