@@ -8,6 +8,12 @@ from django.views import generic
 from movies.models import Actor, Movie, Review
 
 
+class MovieList(generic.ListView):
+    model = Movie
+    paginate_by = 10
+    template_name = 'movies.html'
+
+
 class ActorView(generic.DetailView):
     template_name = 'actor.html'
     model = Actor
@@ -64,13 +70,7 @@ def search(request):
             page = paginator.num_pages
     else:
         page = 1
-    params['results'] = paginator.page(page)
-    params['page_id'] = page
-    params['page_num'] = paginator.num_pages
-    params['visible_pages'] = [p for p in range(page - 2, page + 6) if p in paginator.page_range]
-    params['total'] = paginator.count
-    params['front'] = 1 not in params['visible_pages']
-    params['end'] = paginator.num_pages not in params['visible_pages']
+    params['page_obj'] = paginator.page(page)
     end = time()
     params['time'] = "%.6f" % (end - start)
     return render(request, 'search.html', params)

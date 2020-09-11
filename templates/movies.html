@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ object.title }}</title>
+</head>
+<body>
+{% include 'header.html' %}
+{% for movie in object_list %}
+    <a href="{% url 'movie' movie.id %}">
+        <img src="{{ movie.img }}" alt="{{ movie.title }}">
+        <p>{{ movie.title }}</p>
+    </a>
+{% endfor %}
+{% include 'paginator.html' %}
+</body>
+</html>
