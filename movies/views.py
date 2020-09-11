@@ -8,6 +8,7 @@ class ActorView(generic.DetailView):
     model = Actor
 
     def get_context_data(self, **kwargs):
+        self.object.movies = list(self.object.movie_set.all())
         self.object.collaborators = [Actor.objects.get(pk=int(x)) for x in self.object.collaboration.split()]
         return super().get_context_data(**kwargs)
 

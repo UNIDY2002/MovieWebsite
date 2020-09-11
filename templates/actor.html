@@ -13,6 +13,12 @@
 <p>{{ object.birthday }}</p>
 <p>{{ object.birth_place }}</p>
 <p>{{ object.biography|linebreaksbr }}</p>
+{% for movie in object.movies %}
+    <a href="{% url 'movie' movie.id %}">
+        <img src="{{ movie.img }}" alt="{{ movie.title }}">
+        <p>{{ movie.title }}</p>
+    </a>
+{% endfor %}
 {% for collaborator in object.collaborators %}
     <a href="{% url 'actor' collaborator.id %}">
         <img src="{{ collaborator.photo }}" alt="{{ collaborator.name }}">
