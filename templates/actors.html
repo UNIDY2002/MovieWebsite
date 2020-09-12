@@ -9,12 +9,28 @@
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
 <div class="mdui-container main-content">
-    {% for actor in object_list %}
-        <a href="{% url 'actor' actor.id %}">
-            <img src="{{ actor.photo }}" alt="{{ actor.name }}">
-            <p>{{ actor.name }}</p>
-        </a>
-    {% endfor %}
+    <div class="mdui-container-fluid">
+        <div class="mdui-row-xs-4 mdui-grid-list">
+            {% for actor in object_list %}
+                <div class="mdui-col">
+                    <div class="mdui-card mdui-hoverable" style="margin: 20px; width: 200px;">
+                        <div class="mdui-card-media">
+                            <a href="{% url 'actor' actor.id %}">
+                                <img src="{{ actor.photo }}" alt="{{ actor.name }}">
+                            </a>
+                        </div>
+                        <div class="mdui-card-primary">
+                            <div class="mdui-card-primary-title">
+                                <div class="mdui-typo" style="text-align: center;">
+                                    <a href="{% url 'actor' actor.id %}">{{ actor.name }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     {% include 'paginator.html' %}
 </div>
 </body>

@@ -10,10 +10,33 @@
 {% include 'header.html' %}
 <div class="mdui-container main-content">
     {% for movie in object_list %}
-        <a href="{% url 'movie' movie.id %}">
-            <img src="{{ movie.img }}" alt="{{ movie.title }}">
-            <p>{{ movie.title }}</p>
-        </a>
+        <div class="mdui-card mdui-hoverable" style="margin: 30px;">
+            <div class="mdui-card-content" style="flex-direction: row">
+                <div class="mdui-container-fluid">
+                    <div class="mdui-row">
+                        <div class="mdui-col-xs-3">
+                            <a href="{% url 'movie' movie.id %}">
+                                <img src="{{ movie.img }}" alt="{{ movie.title }}" width="170">
+                            </a>
+                        </div>
+                        <div class="mdui-col-xs-9 mdui-typo">
+                            <div class="mdui-typo-title">
+                                <a href="{% url 'movie' movie.id %}">{{ movie.title }}</a>
+                            </div>
+                            <div class="mdui-typo-body-2">{{ movie.year }}</div>
+                            <div>{{ movie.genre }}</div>
+                            {% if movie.time %}
+                                <div>{{ movie.time }}分钟</div>
+                            {% endif %}
+                            {% if movie.rating %}
+                                <div>{{ movie.rating }}分</div>
+                            {% endif %}
+                            <div>{{ movie.director }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
     {% include 'paginator.html' %}
 </div>

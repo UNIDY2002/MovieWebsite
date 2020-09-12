@@ -21,7 +21,7 @@ class MovieList(generic.ListView):
 
 class ActorList(generic.ListView):
     model = Actor
-    paginate_by = 10
+    paginate_by = 12
     template_name = 'actors.html'
 
     def get_context_data(self, **kwargs):
