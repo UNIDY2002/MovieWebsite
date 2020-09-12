@@ -7,26 +7,89 @@
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
 <div class="mdui-container main-content">
-    <img src="{{ object.photo }}" alt="{{ object.name }}">
-    <p>{{ object.name }}</p>
-    <p>{{ object.height }}</p>
-    <p>{{ object.weight }}</p>
-    <p>{{ object.constellation }}</p>
-    <p>{{ object.birthday }}</p>
-    <p>{{ object.birth_place }}</p>
-    <p>{{ object.biography|linebreaksbr }}</p>
-    {% for movie in object.movies %}
-        <a href="{% url 'movie' movie.id %}">
-            <img src="{{ movie.img }}" alt="{{ movie.title }}">
-            <p>{{ movie.title }}</p>
-        </a>
-    {% endfor %}
-    {% for collaborator in object.collaborators %}
-        <a href="{% url 'actor' collaborator.id %}">
-            <img src="{{ collaborator.photo }}" alt="{{ collaborator.name }}">
-            <p>{{ collaborator.name }}</p>
-        </a>
-    {% endfor %}
+    <div class="mdui-container-fluid">
+        <div class="mdui-row" style="padding: 18px 0;">
+            <div class="mdui-col-xs-6">
+                <div class="mdui-row">
+                    <div class="mdui-col-xs-5">
+                        <div class="mdui-card mdui-hoverable">
+                            <div class="mdui-card-media">
+                                <a href="{{ object.photo }}" target="_blank">
+                                    <img src="{{ object.photo }}" alt="{{ object.name }}">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdui-col-xs-7">
+                        <div class="mdui-typo">
+                            <div class="mdui-typo-headline">{{ actor.name }}</div>
+                            {% if actor.height %}
+                                <div>　身高：{{ actor.height }}</div>
+                            {% endif %}
+                            {% if actor.weight %}
+                                <div>　体重：{{ actor.weight }}</div>
+                            {% endif %}
+                            {% if actor.birthday %}
+                                <div>　生日：{{ actor.birthday }}</div>
+                            {% endif %}
+                            {% if actor.constellation %}
+                                <div>　星座：{{ actor.constellation }}</div>
+                            {% endif %}
+                            {% if actor.birth_place %}
+                                <div>出生地：{{ actor.birth_place }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mdui-col-xs-6">
+                {% if actor.biography %}
+                    <div class="mdui-typo-title" style="padding: 0 10px;">个人简介</div>
+                    <div class="mdui-card mdui-hoverable" style="margin: 10px; padding: 5px 15px;">
+                        <p>{{ actor.biography|linebreaksbr }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mdui-typo-title" style="padding: 10px 10px;">参演作品</div>
+        <div class="mdui-row-xs-5 mdui-grid-list">
+            {% for movie in object.movie_set.all %}
+                <div class="mdui-col">
+                    <div class="mdui-card mdui-hoverable" style="margin: 10px;">
+                        <div class="mdui-card-media">
+                            <a href="{% url 'movie' movie.id %}">
+                                <img src="{{ movie.img }}" alt="{{ movie.title }}">
+                            </a>
+                        </div>
+                        <div class="mdui-card-content">
+                            <div class="mdui-typo" style="text-align: center;">
+                                <a href="{% url 'movie' movie.id %}">{{ movie.title }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mdui-typo-title" style="padding: 10px 10px;">合作演员</div>
+        <div class="mdui-row-xs-5 mdui-grid-list">
+            {% for actor in object.collaborators %}
+                <div class="mdui-col">
+                    <div class="mdui-card mdui-hoverable" style="margin: 10px;">
+                        <div class="mdui-card-media">
+                            <a href="{% url 'actor' actor.id %}">
+                                <img src="{{ actor.photo }}" alt="{{ actor.name }}">
+                            </a>
+                        </div>
+                        <div class="mdui-card-content">
+                            <div class="mdui-typo" style="text-align: center;">
+                                <a href="{% url 'actor' actor.id %}">{{ actor.name }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 </body>
 </html>
