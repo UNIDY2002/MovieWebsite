@@ -25,13 +25,25 @@
                                 <div class="mdui-typo-title">
                                     <a href="{{ result.href }}">{{ result.title }}</a>
                                 </div>
-                                <div>{{ result.brief }}</div>
+                                <div class="brief">{{ result.brief }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
+        <script>
+            $(() => {
+                const texts = $('.brief');
+                const keyword = "{{ request.GET.q }}";
+                texts.each((_, text) => {
+                    const str = text.innerHTML;
+                    if (str.indexOf(keyword) !== -1) {
+                        text.innerHTML = str.split(keyword).join("<span class='mdui-text-color-theme-accent'>" + keyword + "</span>");
+                    }
+                });
+            });
+        </script>
     {% else %}
         <div class="mdui-container-fluid">
             <div class="mdui-row-xs-4 mdui-grid-list">

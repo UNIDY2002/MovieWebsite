@@ -60,6 +60,18 @@ class MovieView(generic.DetailView):
         return context
 
 
+def shorten(src, keyword):
+    threshold = 300
+    if len(src) > threshold:
+        begin = src.index(keyword) - 7 if keyword in src else - 1
+        if begin <= 0:
+            return src[0: threshold] + '...'
+        else:
+            return '...' + src[begin: begin + threshold] + ('...' if begin + threshold < len(src) else '')
+    else:
+        return src
+
+
 def search(request):
     start = time()
     params = {}
@@ -88,7 +100,7 @@ def search(request):
             'title': x.movie.title,
             'img': x.movie.img,
             'href': '/movie/%s/' % x.movie.id,
-            'brief': x.content[:300] + ('' if len(x.content) <= 300 else '...'),
+            'brief': shorten(x.content, q),
         } for x in r]
         params['hasBrief'] = True
     paginator = Paginator(params['results'], 12)
