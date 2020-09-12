@@ -25,7 +25,7 @@ class ActorView(generic.DetailView):
     model = Actor
 
     def get_context_data(self, **kwargs):
-        self.object.movies = list(self.object.movie_set.all())
+        self.object.movies = self.object.movie_set.all()
         self.object.collaborators = []
         for x in self.object.collaboration.split():
             try:
@@ -40,9 +40,9 @@ class MovieView(generic.DetailView):
     model = Movie
 
     def get_context_data(self, **kwargs):
-        self.object.actor_set = list(self.object.actors.all())
-        self.object.plots = list(self.object.plot_set.all())
-        self.object.reviews = list(self.object.review_set.all())
+        self.object.actor_set = self.object.actors.all()
+        self.object.plots = self.object.plot_set.all()
+        self.object.reviews = self.object.review_set.all()
         return super().get_context_data(**kwargs)
 
 
