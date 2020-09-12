@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>演员大全</title>
+</head>
+<body>
+{% include 'header.html' %}
+{% for actor in object_list %}
+    <a href="{% url 'actor' actor.id %}">
+        <img src="{{ actor.photo }}" alt="{{ actor.name }}">
+        <p>{{ actor.name }}</p>
+    </a>
+{% endfor %}
+{% include 'paginator.html' %}
+</body>
+</html>

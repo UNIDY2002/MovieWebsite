@@ -14,13 +14,24 @@ class MovieList(generic.ListView):
     template_name = 'movies.html'
 
 
+class ActorList(generic.ListView):
+    model = Actor
+    paginate_by = 10
+    template_name = 'actors.html'
+
+
 class ActorView(generic.DetailView):
     template_name = 'actor.html'
     model = Actor
 
     def get_context_data(self, **kwargs):
         self.object.movies = list(self.object.movie_set.all())
-        self.object.collaborators = [Actor.objects.get(pk=int(x)) for x in self.object.collaboration.split()]
+        self.object.collaborators = []
+        for x in self.object.collaboration.split():
+            try:
+                self.object.collaborators.append(Actor.objects.get(pk=int(x)))
+            except Actor.DoesNotExist:
+                pass
         return super().get_context_data(**kwargs)
 
 
