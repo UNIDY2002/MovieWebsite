@@ -34,13 +34,14 @@
 </header>
 <div class="mdui-drawer">
     <div class="mdui-list" mdui-collapse="{accordion: true}">
+        <!-- Hard-coded total count - pretty ugly to show them on the main page. -->
         <a href="{% url 'movies' %}" class="mdui-list-item mdui-ripple">
             <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">local_movies</i>
-            <div class="drawer-list-item">电影列表</div>
+            <div class="drawer-list-item">电影列表 (2386)</div>
         </a>
         <a href="{% url 'actors' %}" class="mdui-list-item mdui-ripple">
             <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">recent_actors</i>
-            <div class="drawer-list-item">演员列表</div>
+            <div class="drawer-list-item">演员列表 (7915)</div>
         </a>
     </div>
 </div>
