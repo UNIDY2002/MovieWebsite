@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
+    {% include 'head.html' %}
     <title>演员大全</title>
 </head>
-<body>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
 {% for actor in object_list %}
     <a href="{% url 'actor' actor.id %}">

@@ -13,11 +13,21 @@ class MovieList(generic.ListView):
     paginate_by = 10
     template_name = 'movies.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['headerTitle'] = '电影'
+        return context
+
 
 class ActorList(generic.ListView):
     model = Actor
     paginate_by = 10
     template_name = 'actors.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['headerTitle'] = '演员'
+        return context
 
 
 class ActorView(generic.DetailView):
@@ -32,7 +42,9 @@ class ActorView(generic.DetailView):
                 self.object.collaborators.append(Actor.objects.get(pk=int(x)))
             except Actor.DoesNotExist:
                 pass
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context['headerTitle'] = '演员'
+        return context
 
 
 class MovieView(generic.DetailView):
@@ -43,7 +55,9 @@ class MovieView(generic.DetailView):
         self.object.actor_set = self.object.actors.all()
         self.object.plots = self.object.plot_set.all()
         self.object.reviews = self.object.review_set.all()
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context['headerTitle'] = '电影'
+        return context
 
 
 def search(request):
@@ -82,6 +96,7 @@ def search(request):
     else:
         page = 1
     params['page_obj'] = paginator.page(page)
+    params['headerTitle'] = '搜索'
     end = time()
     params['time'] = "%.6f" % (end - start)
     return render(request, 'search.html', params)

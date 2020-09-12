@@ -1,15 +1,46 @@
-<form action="{% url 'search' %}">
-    <label>
-        分类
-        <select name="type">
+<header class="mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+        <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"
+              mdui-drawer="{target: '.mdui-drawer', swipe: true}">
+            <i class="mdui-icon material-icons">menu</i>
+        </span>
+        <p class="mdui-typo-headline">{{ headerTitle }}</p>
+        <div class="mdui-toolbar-spacer"></div>
+        <select id="searchTypeSelect" class="mdui-select">
             <option value="movie"{% if request.GET.type == 'movie' %} selected{% endif %}>电影</option>
             <option value="actor"{% if request.GET.type == 'actor' %} selected{% endif %}>演员</option>
             <option value="review"{% if request.GET.type == 'review' %} selected{% endif %}>影评</option>
         </select>
-    </label>
-    <label>
-        请搜索：
-        <input type="text" name="q" value="{{ request.GET.q }}"/>
-    </label>
-    <input type="submit" value="搜索"/>
-</form>
+        <form action="{% url 'search' %}" id="searchForm" onsubmit="updateType()">
+            <input type="hidden" name="type" id="searchTypeInput"/>
+            <input class="mdui-textfield-input search-input" value="{{ request.GET.q }}" name='q' type="text"
+                   placeholder="想找什么呢"/>
+        </form>
+        <a class="mdui-btn mdui-btn-icon" id="searchButton">
+            <i class="mdui-icon material-icons">search</i>
+        </a>
+    </div>
+    <script>
+        function updateType() {
+            $("#searchTypeInput").val($('#searchTypeSelect option:selected').val());
+        }
+
+        $(() => {
+            $("#searchButton").click(() => {
+                $("#searchForm").submit();
+            });
+        });
+    </script>
+</header>
+<div class="mdui-drawer">
+    <div class="mdui-list" mdui-collapse="{accordion: true}">
+        <a href="{% url 'movies' %}" class="mdui-list-item mdui-ripple">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">local_movies</i>
+            <div class="drawer-list-item">电影列表</div>
+        </a>
+        <a href="{% url 'actors' %}" class="mdui-list-item mdui-ripple">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">recent_actors</i>
+            <div class="drawer-list-item">演员列表</div>
+        </a>
+    </div>
+</div>

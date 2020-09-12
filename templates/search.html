@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
+    {% include 'head.html' %}
     <title>搜索结果</title>
 </head>
 {% include 'header.html' %}
-<body>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 <p>找到{{ page_obj.paginator.count }}条结果，用时：{{ time }}s</p>
 {% for result in page_obj %}
     <a href="{{ result.href }}">
