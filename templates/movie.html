@@ -7,29 +7,83 @@
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
 <div class="mdui-container main-content">
-    <img src="{{ object.img }}" alt="{{ object.title }}">
-    <p>{{ object.title }}</p>
-    <p>{{ object.year }}</p>
-    <p>{{ object.genre }}</p>
-    <p>{{ object.time }}分钟</p>
-    <p>{{ object.rating }}</p>
-    <p>{{ object.director }}</p>
-    <p>{{ object.screen_writer }}</p>
-    <p>{{ object.location }}</p>
-    <p>{{ object.company }}</p>
-    <p>{{ object.alias }}</p>
-    {% for actor in object.actor_set %}
-        <a href="{% url 'actor' actor.id %}">
-            <img src="{{ actor.photo }}" alt="{{ actor.name }}">
-            <p>{{ actor.name }}</p>
-        </a>
-    {% endfor %}
-    {% for plot in object.plots %}
-        <p>{{ plot.content|linebreaksbr }}</p>
-    {% endfor %}
-    {% for review in object.reviews %}
-        <p>{{ review.content|linebreaksbr }}</p>
-    {% endfor %}
+    <div class="mdui-container-fluid">
+        <div class="mdui-row" style="padding: 18px 0;">
+            <div class="mdui-col-xs-3">
+                <div class="mdui-card mdui-hoverable">
+                    <div class="mdui-card-media">
+                        <a href="{{ object.img }}" target="_blank">
+                            <img src="{{ object.img }}" alt="{{ object.title }}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mdui-col-xs-9">
+                <div class="mdui-typo">
+                    <div>
+                        <span class="mdui-typo-headline">{{ movie.title }}</span>
+                        {% if movie.year %}
+                            <span class="mdui-typo-subheading">({{ movie.year }})</span>
+                        {% endif %}
+                    </div>
+                    {% if movie.genre %}
+                        <div>　　类型：{{ movie.genre }}</div>
+                    {% endif %}
+                    {% if movie.time %}
+                        <div>　　片长：{{ movie.time }}分钟</div>
+                    {% endif %}
+                    {% if movie.rating %}
+                        <div>　　评分：{{ movie.rating }}分</div>
+                    {% endif %}
+                    {% if movie.director %}
+                        <div>　　导演：{{ movie.director }}</div>
+                    {% endif %}
+                    {% if movie.screen_writer %}
+                        <div>　　编剧：{{ movie.screen_writer }}</div>
+                    {% endif %}
+                    {% if movie.location %}
+                        <div>国家地区：{{ movie.location }}</div>
+                    {% endif %}
+                    {% if movie.company %}
+                        <div>制作公司：{{ movie.company }}</div>
+                    {% endif %}
+                    {% if movie.alias %}
+                        <div>更多片名：{{ movie.alias }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="mdui-row-xs-5 mdui-grid-list">
+            {% for actor in object.actor_set %}
+                <div class="mdui-col">
+                    <div class="mdui-card mdui-hoverable" style="margin: 10px;">
+                        <div class="mdui-card-media">
+                            <a href="{% url 'actor' actor.id %}">
+                                <img src="{{ actor.photo }}" alt="{{ actor.name }}">
+                            </a>
+                        </div>
+                        <div class="mdui-card-primary">
+                            <div class="mdui-card-primary-title">
+                                <div class="mdui-typo" style="text-align: center;">
+                                    <a href="{% url 'actor' actor.id %}">{{ actor.name }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% for plot in object.plots %}
+            <div class="mdui-card mdui-hoverable" style="margin: 10px; padding: 10px;">
+                <p>{{ plot.content|linebreaksbr }}</p>
+            </div>
+        {% endfor %}
+        {% for review in object.reviews %}
+            <div class="mdui-card mdui-hoverable" style="margin: 10px; padding: 10px;">
+                <p>{{ review.content|linebreaksbr }}</p>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 </body>
 </html>
