@@ -72,17 +72,18 @@
         </div>
         <div class="mdui-typo-title" style="padding: 10px 10px;">合作演员</div>
         <div class="mdui-row-xs-5 mdui-grid-list">
-            {% for actor in object.collaborators %}
+            {% for actor_info in object.collaborators %}
                 <div class="mdui-col">
                     <div class="mdui-card mdui-hoverable" style="margin: 10px;">
                         <div class="mdui-card-media">
-                            <a href="{% url 'actor' actor.id %}">
-                                <img src="{{ actor.photo }}" alt="{{ actor.name }}">
+                            <a href="{% url 'actor' actor_info.actor.id %}">
+                                <img src="{{ actor_info.actor.photo }}" alt="{{ actor_info.actor.name }}">
                             </a>
                         </div>
                         <div class="mdui-card-content">
                             <div class="mdui-typo" style="text-align: center;">
-                                <a href="{% url 'actor' actor.id %}">{{ actor.name }}</a>
+                                <a href="{% url 'actor' actor_info.actor.id %}">{{ actor_info.actor.name }}
+                                    ({{ actor_info.count }})</a>
                             </div>
                         </div>
                     </div>

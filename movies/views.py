@@ -1,3 +1,4 @@
+import json
 from time import time
 
 from django.core.paginator import Paginator
@@ -6,6 +7,9 @@ from django.shortcuts import render
 from django.views import generic
 
 from movies.models import Actor, Movie, Review
+
+with open('data/collaboration_graph.json', encoding='utf-8') as f:
+    collaboration_graph = json.load(f)
 
 
 class MovieList(generic.ListView):
@@ -37,9 +41,12 @@ class ActorView(generic.DetailView):
     def get_context_data(self, **kwargs):
         self.object.movies = self.object.movie_set.all()
         self.object.collaborators = []
-        for x in self.object.collaboration.split():
+        for x, y in collaboration_graph[self.object.id]:
             try:
-                self.object.collaborators.append(Actor.objects.get(pk=int(x)))
+                self.object.collaborators.append({
+                    'actor': Actor.objects.get(pk=int(x)),
+                    'count': y,
+                })
             except Actor.DoesNotExist:
                 pass
         context = super().get_context_data(**kwargs)
