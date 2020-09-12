@@ -9,14 +9,53 @@
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
 <div class="mdui-container main-content">
-    <p>找到{{ page_obj.paginator.count }}条结果，用时：{{ time }}s</p>
-    {% for result in page_obj %}
-        <a href="{{ result.href }}">
-            <img src="{{ result.img }}" alt="{{ result.title }}"/>
-            <p>{{ result.title }}</p>
-        </a>
-        <p>{{ result.brief }}</p>
-    {% endfor %}
+    <p>找到{{ page_obj.paginator.count }}条结果，用时{{ time }}s</p>
+    {% if hasBrief %}
+        {% for result in page_obj %}
+            <div class="mdui-card mdui-hoverable" style="margin: 30px;">
+                <div class="mdui-card-content" style="flex-direction: row">
+                    <div class="mdui-container-fluid">
+                        <div class="mdui-row">
+                            <div class="mdui-col-xs-3">
+                                <a href="{{ result.href }}">
+                                    <img src="{{ result.img }}" alt="{{ result.title }}" width="170">
+                                </a>
+                            </div>
+                            <div class="mdui-col-xs-9 mdui-typo">
+                                <div class="mdui-typo-title">
+                                    <a href="{{ result.href }}">{{ result.title }}</a>
+                                </div>
+                                <div>{{ result.brief }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="mdui-container-fluid">
+            <div class="mdui-row-xs-4 mdui-grid-list">
+                {% for result in page_obj %}
+                    <div class="mdui-col">
+                        <div class="mdui-card mdui-hoverable" style="margin: 20px; width: 200px;">
+                            <div class="mdui-card-media">
+                                <a href="{{ result.href }}">
+                                    <img src="{{ result.img }}" alt="{{ result.title }}">
+                                </a>
+                            </div>
+                            <div class="mdui-card-primary">
+                                <div class="mdui-card-primary-title">
+                                    <div class="mdui-typo" style="text-align: center;">
+                                        <a href="{{ result.href }}">{{ result.title }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
     {% include 'paginator.html' %}
 </div>
 </body>

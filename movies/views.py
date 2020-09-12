@@ -73,6 +73,7 @@ def search(request):
             'img': x.img,
             'href': '/movie/%s/' % x.id,
         } for x in r]
+        params['hasBrief'] = False
     elif category == 'actor':
         r = Actor.objects.filter(Q(name__icontains=q) | Q(movie__title__icontains=q)).distinct()
         params['results'] = [{
@@ -80,15 +81,17 @@ def search(request):
             'img': x.photo,
             'href': '/actor/%s/' % x.id,
         } for x in r]
+        params['hasBrief'] = False
     elif category == 'review':
         r = Review.objects.filter(content__icontains=q)
         params['results'] = [{
             'title': x.movie.title,
             'img': x.movie.img,
             'href': '/movie/%s/' % x.movie.id,
-            'brief': x.content[:100] + ('' if len(x.content) <= 100 else '...'),
+            'brief': x.content[:300] + ('' if len(x.content) <= 300 else '...'),
         } for x in r]
-    paginator = Paginator(params['results'], 10)
+        params['hasBrief'] = True
+    paginator = Paginator(params['results'], 12)
     if 'page' in request.GET:
         page = int(request.GET['page'])
         if page > paginator.num_pages:
