@@ -78,7 +78,7 @@
                 {% if movie.plots %}
                     <div class="mdui-typo-title" style="padding: 0 10px;">剧情简介</div>
                     {% for plot in object.plots %}
-                        <div class="mdui-card mdui-hoverable" style="margin: 10px; padding: 5px 15px;">
+                        <div class="mdui-card mdui-hoverable" style="margin: 10px; padding: 5px 15px; line-height: 1.5">
                             <p>{{ plot.content|linebreaksbr }}</p>
                         </div>
                     {% endfor %}
@@ -88,7 +88,7 @@
         {% if movie.reviews %}
             <div class="mdui-typo-title" style="padding: 0 10px;">精选影评</div>
             {% for review in object.reviews %}
-                <div class="mdui-card mdui-hoverable" style="margin: 10px; padding: 10px;">
+                <div class="mdui-card mdui-hoverable" style="margin: 10px; padding: 10px; line-height: 1.5">
                     <p>{{ review.content|linebreaksbr }}</p>
                 </div>
             {% endfor %}
