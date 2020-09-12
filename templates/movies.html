@@ -1,17 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh">
 <head>
     {% include 'head.html' %}
     <title>电影大全</title>
+    <link rel="stylesheet" href="{% static 'paginator.css' %}">
 </head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
-{% for movie in object_list %}
-    <a href="{% url 'movie' movie.id %}">
-        <img src="{{ movie.img }}" alt="{{ movie.title }}">
-        <p>{{ movie.title }}</p>
-    </a>
-{% endfor %}
-{% include 'paginator.html' %}
+<div class="mdui-container main-content">
+    {% for movie in object_list %}
+        <a href="{% url 'movie' movie.id %}">
+            <img src="{{ movie.img }}" alt="{{ movie.title }}">
+            <p>{{ movie.title }}</p>
+        </a>
+    {% endfor %}
+    {% include 'paginator.html' %}
+</div>
 </body>
 </html>

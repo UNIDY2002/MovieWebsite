@@ -1,0 +1,38 @@
+#paginator {
+    flex-direction: row;
+}
+
+#paginator .extend {
+    text-decoration: none;
+    color: inherit;
+    position: absolute;
+}
+
+#paginator .extend.prev {
+    left: 8px;
+}
+
+#paginator .extend.next {
+    right: 8px;
+}
+
+#paginator .spacer {
+    flex-grow: 1;
+}
+
+#pageButtons {
+    text-align: center;
+}
+
+#pageButtons button {
+    margin: 0 5px;
+    font-size: 16px;
+}
+
+#pageButtons .front {
+    margin-right: 20px;
+}
+
+#pageButtons .end {
+    margin-left: 20px;
+}

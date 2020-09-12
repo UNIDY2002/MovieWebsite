@@ -6,25 +6,27 @@
 </head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
-<img src="{{ object.photo }}" alt="{{ object.name }}">
-<p>{{ object.name }}</p>
-<p>{{ object.height }}</p>
-<p>{{ object.weight }}</p>
-<p>{{ object.constellation }}</p>
-<p>{{ object.birthday }}</p>
-<p>{{ object.birth_place }}</p>
-<p>{{ object.biography|linebreaksbr }}</p>
-{% for movie in object.movies %}
-    <a href="{% url 'movie' movie.id %}">
-        <img src="{{ movie.img }}" alt="{{ movie.title }}">
-        <p>{{ movie.title }}</p>
-    </a>
-{% endfor %}
-{% for collaborator in object.collaborators %}
-    <a href="{% url 'actor' collaborator.id %}">
-        <img src="{{ collaborator.photo }}" alt="{{ collaborator.name }}">
-        <p>{{ collaborator.name }}</p>
-    </a>
-{% endfor %}
+<div class="mdui-container main-content">
+    <img src="{{ object.photo }}" alt="{{ object.name }}">
+    <p>{{ object.name }}</p>
+    <p>{{ object.height }}</p>
+    <p>{{ object.weight }}</p>
+    <p>{{ object.constellation }}</p>
+    <p>{{ object.birthday }}</p>
+    <p>{{ object.birth_place }}</p>
+    <p>{{ object.biography|linebreaksbr }}</p>
+    {% for movie in object.movies %}
+        <a href="{% url 'movie' movie.id %}">
+            <img src="{{ movie.img }}" alt="{{ movie.title }}">
+            <p>{{ movie.title }}</p>
+        </a>
+    {% endfor %}
+    {% for collaborator in object.collaborators %}
+        <a href="{% url 'actor' collaborator.id %}">
+            <img src="{{ collaborator.photo }}" alt="{{ collaborator.name }}">
+            <p>{{ collaborator.name }}</p>
+        </a>
+    {% endfor %}
+</div>
 </body>
 </html>

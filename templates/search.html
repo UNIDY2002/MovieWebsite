@@ -1,19 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh">
 <head>
     {% include 'head.html' %}
     <title>搜索结果</title>
+    <link rel="stylesheet" href="{% static 'paginator.css' %}">
 </head>
-{% include 'header.html' %}
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
-<p>找到{{ page_obj.paginator.count }}条结果，用时：{{ time }}s</p>
-{% for result in page_obj %}
-    <a href="{{ result.href }}">
-        <img src="{{ result.img }}" alt="{{ result.title }}"/>
-        <p>{{ result.title }}</p>
-    </a>
-    <p>{{ result.brief }}</p>
-{% endfor %}
-{% include 'paginator.html' %}
+{% include 'header.html' %}
+<div class="mdui-container main-content">
+    <p>找到{{ page_obj.paginator.count }}条结果，用时：{{ time }}s</p>
+    {% for result in page_obj %}
+        <a href="{{ result.href }}">
+            <img src="{{ result.img }}" alt="{{ result.title }}"/>
+            <p>{{ result.title }}</p>
+        </a>
+        <p>{{ result.brief }}</p>
+    {% endfor %}
+    {% include 'paginator.html' %}
+</div>
 </body>
 </html>

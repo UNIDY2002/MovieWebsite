@@ -1,51 +1,67 @@
 {% if page_obj.has_other_pages %}
-    <ul>
-
+    <nav id="paginator">
         {% if page_obj.has_previous %}
-            <li>
-                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">
-                    <span>&laquo;</span>
-                </a>
-            </li>
-        {% endif %}
-
-        {% if page_obj.number > 3 %}
-            <li>
-                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}">1</a>
-            </li>
-        {% endif %}
-
-        {% for index in page_obj.paginator.page_range %}
-            {% if page_obj.number|add:'-3' < index and index < page_obj.number|add:'6' %}
-                <li>
-                    <a class="page-link{% if page_obj.number == index %} selected{% endif %}"
-                       href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ index }}">{{ index }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-
-        {% if page_obj.number|add:'5' < page_obj.paginator.num_pages %}
-            <li>
-                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-            </li>
+            <button aria-label="prev"
+                    class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-btn-icon mdui-color-theme-accent mdui-ripple extend prev"
+                    onclick="navigate({{ page_obj.previous_page_number }})">
+                <i class="mdui-icon material-icons">arrow_back</i>
+            </button>
         {% endif %}
 
         {% if page_obj.has_next %}
-            <li>
-                <a href="?type={{ request.GET.type }}&q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">
-                    <span>&raquo;</span>
-                </a>
-            </li>
+            <button aria-label="next"
+                    class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-btn-icon mdui-color-theme-accent mdui-ripple extend next"
+                    onclick="navigate({{ page_obj.next_page_number }})">
+                <i class="mdui-icon material-icons">arrow_forward</i>
+            </button>
         {% endif %}
-    </ul>
 
-    <form>
-        <input type="hidden" name="type" value="{{ request.GET.type }}"/>
-        <input type="hidden" name="q" value="{{ request.GET.q }}"/>
-        <label>
-            跳转到：
-            <input type="text" name="page"/>
-        </label>
-        <input type="submit" value="跳转"/>
-    </form>
+        <div id="pageButtons">
+
+            {% if page_obj.number > 3 %}
+                <button class="mdui-btn mdui-btn-icon front" onclick="navigate(1)">1</button>
+            {% endif %}
+
+            {% for index in page_obj.paginator.page_range %}
+                {% if page_obj.number|add:'-3' < index and index < page_obj.number|add:'6' %}
+                    <button class="mdui-btn mdui-btn-icon{% if page_obj.number == index %} mdui-color-theme-accent mdui-ripple{% endif %}"
+                            {% if page_obj.number != index %}onclick="navigate({{ index }})"{% endif %}>{{ index }}</button>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.number|add:'5' < page_obj.paginator.num_pages %}
+                <button class="mdui-btn mdui-btn-icon end"
+                        onclick="navigate({{ page_obj.paginator.num_pages }})">{{ page_obj.paginator.num_pages }}</button>
+            {% endif %}
+
+        </div>
+    </nav>
+
+    <div class="mdui-textfield mdui-textfield-expandable mdui-center">
+        <button class="mdui-textfield-icon mdui-btn mdui-btn-icon">
+            <i class="mdui-icon material-icons">exit_to_app</i>
+        </button>
+        <form>
+            {% if request.GET.type %}
+                <input type="hidden" name="type" value="{{ request.GET.type }}"/>
+            {% endif %}
+            {% if request.GET.q %}
+                <input type="hidden" name="q" value="{{ request.GET.q }}"/>
+            {% endif %}
+            <input class="mdui-textfield-input" type="text" name="page" placeholder="你要到哪里去呀"/>
+        </form>
+        <button class="mdui-textfield-close mdui-btn mdui-btn-icon">
+            <i class="mdui-icon material-icons">close</i>
+        </button>
+    </div>
+
+    <script>
+        function navigate(page) {
+            {% if request.GET.type and request.GET.q and request.GET.type != '' and request.GET.q != '' %}
+                window.location = "?type={{ request.GET.type }}&q={{ request.GET.q }}&page=" + page;
+            {% else %}
+                window.location = "?page=" + page;
+            {% endif %}
+        }
+    </script>
 {% endif %}

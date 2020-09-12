@@ -6,28 +6,30 @@
 </head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
 {% include 'header.html' %}
-<img src="{{ object.img }}" alt="{{ object.title }}">
-<p>{{ object.title }}</p>
-<p>{{ object.year }}</p>
-<p>{{ object.genre }}</p>
-<p>{{ object.time }}分钟</p>
-<p>{{ object.rating }}</p>
-<p>{{ object.director }}</p>
-<p>{{ object.screen_writer }}</p>
-<p>{{ object.location }}</p>
-<p>{{ object.company }}</p>
-<p>{{ object.alias }}</p>
-{% for actor in object.actor_set %}
-    <a href="{% url 'actor' actor.id %}">
-        <img src="{{ actor.photo }}" alt="{{ actor.name }}">
-        <p>{{ actor.name }}</p>
-    </a>
-{% endfor %}
-{% for plot in object.plots %}
-    <p>{{ plot.content|linebreaksbr }}</p>
-{% endfor %}
-{% for review in object.reviews %}
-    <p>{{ review.content|linebreaksbr }}</p>
-{% endfor %}
+<div class="mdui-container main-content">
+    <img src="{{ object.img }}" alt="{{ object.title }}">
+    <p>{{ object.title }}</p>
+    <p>{{ object.year }}</p>
+    <p>{{ object.genre }}</p>
+    <p>{{ object.time }}分钟</p>
+    <p>{{ object.rating }}</p>
+    <p>{{ object.director }}</p>
+    <p>{{ object.screen_writer }}</p>
+    <p>{{ object.location }}</p>
+    <p>{{ object.company }}</p>
+    <p>{{ object.alias }}</p>
+    {% for actor in object.actor_set %}
+        <a href="{% url 'actor' actor.id %}">
+            <img src="{{ actor.photo }}" alt="{{ actor.name }}">
+            <p>{{ actor.name }}</p>
+        </a>
+    {% endfor %}
+    {% for plot in object.plots %}
+        <p>{{ plot.content|linebreaksbr }}</p>
+    {% endfor %}
+    {% for review in object.reviews %}
+        <p>{{ review.content|linebreaksbr }}</p>
+    {% endfor %}
+</div>
 </body>
 </html>
